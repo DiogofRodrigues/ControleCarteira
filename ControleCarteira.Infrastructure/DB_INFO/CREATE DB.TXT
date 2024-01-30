@@ -1,0 +1,56 @@
+
+--1. Criacao do Banco de dados
+
+CREATE DATABASE [CarteiraDB]
+GO
+
+USE CarteiraDB
+GO
+--2. Criacao das Tabelas
+
+CREATE TABLE [dbo].[ORDEM](
+	id bigint IDENTITY(1,1) NOT NULL,
+	Ticker VARCHAR(10) NOT NULL,
+	Tipo char(1) NOT NULL,
+	QUANTIDADE INT NOT NULL,
+	precoUnitario NUMERIC(12, 4) NOT NULL,
+	DataOrdem Datetime  NULL,
+ CONSTRAINT [PK_ordem] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)) ON [PRIMARY]
+GO
+
+create table Carteira
+(
+	Ticker varchar(20) NOT NULL,
+	Quantidade int NOT NULL,
+	PrecoMedio numeric(15,2) NOT NULL,
+	ValorTotal numeric(15,2) NOT NULL
+
+ CONSTRAINT [PK_carteira] PRIMARY KEY CLUSTERED 
+(
+	Ticker ASC
+)) ON [PRIMARY]
+GO
+
+RETURN
+
+SELECT * FROM  ORDEM
+SELECT * FROM Carteira
+
+INSERT INTO ORDEM (Ticker,Tipo,QUANTIDADE,precoUnitario,DataOrdem) VALUES (@Ticker,@Tipo,@QUANTIDADE,@precoUnitario,@DataOrdem)
+
+INSERT INTO Carteira (Ticker,Quantidade,PrecoMedio,ValorTotal) VALUES (@Ticker,@Quantidade,@PrecoMedio,@ValorTotal)
+
+SELECT * FROM Carteira WHERE Ticker = @Ticker
+
+DELETE FROM Carteira WHERE Ticker = @Ticker
+
+UPDATE Carteira SET Quantidade = @Quantidade , PrecoMedio = @PrecoMedio , ValorTotal = @ValorTotal WHERE Ticker = @Ticker
+
+drop table Carteira
+drop table ORDEM
+
+DELETE FROM Carteira
+DELETE FROM ORDEM
